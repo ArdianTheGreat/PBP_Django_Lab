@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from study_tracker.models import Assignment
 from django.http import HttpResponseRedirect, JsonResponse
@@ -125,3 +126,21 @@ def logout_user(request):
     response.delete_cookie('last_login')
     return response
 
+@csrf_exempt
+def create_transaction_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+
+        new_transaction = Assignment.objects.create(
+            name = data["name"],
+            type = data["type"],
+            amount = int(data["amount"]),
+            description = data["description"]
+        )
+
+        new_transaction.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
