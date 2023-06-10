@@ -127,19 +127,40 @@ def logout_user(request):
     return response
 
 @csrf_exempt
-def create_transaction_flutter(request):
+def create_assignment_flutter(request):
     if request.method == 'POST':
 
         data = json.loads(request.body)
 
         new_transaction = Assignment.objects.create(
             name = data["name"],
-            type = data["type"],
-            amount = int(data["amount"]),
+            date = data["date"],
+            type = data["subject"],
+            amount = int(data["progress"]),
             description = data["description"]
         )
 
         new_transaction.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+def add_plan_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+
+        new_plan = StudyPlan.objects.create(
+            name = data["name"],
+            type = data["type"],
+            date = data["date"],
+            subject = data["subject"],
+            location = data["location"],
+            description = data["description"]
+        )
+
+        new_plan.save()
 
         return JsonResponse({"status": "success"}, status=200)
     else:
