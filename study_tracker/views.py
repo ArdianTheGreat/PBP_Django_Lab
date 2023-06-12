@@ -145,23 +145,3 @@ def create_assignment_flutter(request):
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
-
-def add_plan_flutter(request):
-    if request.method == 'POST':
-
-        data = json.loads(request.body)
-
-        new_plan = StudyPlan.objects.create(
-            name = data["name"],
-            type = data["type"],
-            date = data["date"],
-            subject = data["subject"],
-            location = data["location"],
-            description = data["description"]
-        )
-
-        new_plan.save()
-
-        return JsonResponse({"status": "success"}, status=200)
-    else:
-        return JsonResponse({"status": "error"}, status=401)
