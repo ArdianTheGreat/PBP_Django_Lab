@@ -134,7 +134,7 @@ def create_assignment_flutter(request):
 
         new_transaction = Assignment.objects.create(
             name = data["name"],
-            type = data["subject"],
+            subject = data["subject"],
             progress = int(data["progress"]),
             description = data["description"]
         )
